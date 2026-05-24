@@ -52,18 +52,18 @@ with st.sidebar:
                     st.write("3. Nhận diện Điều khoản, Xử lý Bảng biểu & Indexing...")
                     index_contract(elements, filename=uploaded_file.name)
                     
-                    status.update(label="✅ Đã hoàn tất Số hóa!", state="complete", expanded=False)
+                    status.update(label="✅ Đã hoàn tất Phân tích!", state="complete", expanded=False)
                     st.success("Hệ thống đã sẵn sàng để truy vấn.")
                     
                     # Lưu lại trạng thái đã xử lý cho file này
                     st.session_state.processed_file = uploaded_file.name
                     st.rerun() # Refresh lại để khóa nút
         else:
-            st.success(f"✅ Đã số hóa thành công: {uploaded_file.name}")
+            st.success(f"✅ Đã phân tích thành công: {uploaded_file.name}")
             st.info("💡 Bạn có thể xem kết quả cấu trúc ở bảng bên phải hoặc bắt đầu đặt câu hỏi.")
                 
     st.markdown("---")
-    if st.button("🗑️ Xóa lịch sử Chat"):
+    if st.button("Xóa lịch sử Chat"):
         st.session_state.chat_history = []
         st.rerun()
 
@@ -94,7 +94,7 @@ if user_input := st.chat_input("Tìm kiếm điều khoản hợp đồng (Ví d
         with st.chat_message("assistant"):
             status_container = st.container()
             with status_container:
-                st.info("🌐 Đang dịch câu hỏi (Query Translation) & Tra cứu VectorDB...")
+                st.info("Đang dịch câu hỏi & Tra cứu VectorDB...")
             
             # --- QUERY TRANSLATION ---
             # Dịch câu hỏi sang Tiếng Anh để tra cứu hiệu quả với Embedding tiếng Anh

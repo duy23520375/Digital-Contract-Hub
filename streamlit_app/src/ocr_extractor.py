@@ -26,7 +26,7 @@ def extract_elements(pdf_path):
     return elements
 
 def parse_contract_info(elements):
-    full_text = "\\n\\n".join([str(el) for el in elements])
+    full_text = "\n\n".join([str(el) for el in elements])
     
     prompt = f"""
     Bạn là một trợ lý pháp lý AI. Hãy đọc văn bản hợp đồng sau và trích xuất thông tin dưới dạng JSON CHUẨN XÁC theo cấu trúc:
@@ -47,7 +47,7 @@ def parse_contract_info(elements):
         response = llm_flash.invoke([HumanMessage(content=prompt)])
         text_content = response.content
         
-        match = re.search(r'\\{.*\\}', text_content, re.DOTALL)
+        match = re.search(r'\{.*\}', text_content, re.DOTALL)
         if match:
             json_str = match.group(0)
             return json.loads(json_str)
