@@ -54,8 +54,11 @@ def parse_contract_info(elements):
         else:
             return json.loads(text_content.strip())
     except Exception as e:
-        print(f"Lỗi trích xuất JSON OCR: {e}")
-        try:
+        error_msg = str(e)
+        print(f"Lỗi trích xuất JSON OCR: {error_msg}")
+        if "429" in error_msg or "RESOURCE_EXHAUSTED" in error_msg:
+            return {"Thông báo": "API Key đang bị quá tải (Rate Limit). Vui lòng đợi khoảng 20-30 giây rồi nhấn F5 thử lại."}
+        elif 'text_content' in locals():
             return {"Thông báo": "Gemini không trả về định dạng JSON chuẩn", "Nội dung gốc": text_content}
-        except:
-            return {"error": "Lỗi không xác định"}
+        else:
+            return {"error": f"Lỗi kết nối API: {error_msg}"}
