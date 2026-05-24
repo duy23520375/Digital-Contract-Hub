@@ -1,23 +1,23 @@
 # Digital Contract Hub (POC)
 
-A High-Precision RAG Assistant for Legal Documents featuring Agentic OCR and Cross-lingual Query Translation. Built specifically to handle complex Scanned PDFs and structured tables that traditional RAG systems fail to process.
+Hệ thống Hỏi đáp (RAG) độ chính xác cao dành cho Tài liệu Pháp lý, tích hợp Agentic OCR và Dịch thuật Truy vấn Xuyên ngôn ngữ. Được thiết kế đặc biệt để xử lý các file PDF dạng ảnh quét (Scanned PDFs) và bảng biểu phức tạp mà các hệ thống RAG truyền thống không thể giải quyết.
 
-## 🌟 Key Features
-- **Agentic OCR (`unstructured`)**: Visually scans and extracts text + HTML tables from scanned images.
-- **Stateful Title Tracking**: Solves the "orphan table" problem by remembering and passing down physical document headings into chunk metadata.
-- **AI Table Summarization**: Uses Gemini 2.5 Flash to generate semantic text summaries of raw HTML tables before embedding, making pricing and SLA clauses fully searchable.
-- **Cross-lingual Query Translation**: Users can chat in Vietnamese. The system translates the query to English for Vector Search, and translates the answer back to Vietnamese with exact citations (Source, Page, Clause).
+## Tính năng cốt lõi
+- Agentic OCR (unstructured): Quét hình ảnh trực quan và trích xuất văn bản cùng bảng biểu HTML từ các file ảnh chụp.
+- Stateful Title Tracking: Giải quyết vấn đề "bảng biểu mồ côi" (orphan table) bằng cách ghi nhớ và kế thừa các tiêu đề vật lý của tài liệu vào siêu dữ liệu (metadata) của các đoạn cắt (chunk).
+- AI Table Summarization: Sử dụng Gemini 2.5 Flash để tạo bản tóm tắt ngữ nghĩa từ các bảng HTML thô trước khi đưa vào cơ sở dữ liệu vector, giúp các điều khoản về giá cả và SLA hoàn toàn có thể tìm kiếm được.
+- Cross-lingual Query Translation: Người dùng có thể đặt câu hỏi bằng Tiếng Việt. Hệ thống tự động dịch câu hỏi sang Tiếng Anh để tra cứu trong VectorDB, sau đó dịch câu trả lời về lại Tiếng Việt kèm theo trích dẫn chính xác (Nguồn, Trang, Tên điều khoản).
 
-## 🚀 Installation & Setup
+## Cài đặt và Khởi chạy
 
-### 1. Prerequisites
-- **Python 3.10+**
-- **Tesseract OCR**: Required for scanning images.
-  - **Windows**: Download and install from [UB-Mannheim/tesseract](https://github.com/UB-Mannheim/tesseract/wiki).
-  - Add the installation path (usually `C:\Program Files\Tesseract-OCR`) to your system's `PATH` environment variable.
+### 1. Yêu cầu hệ thống
+- Python 3.10+
+- Tesseract OCR: Bắt buộc để quét hình ảnh.
+  - Windows: Tải và cài đặt từ UB-Mannheim/tesseract (https://github.com/UB-Mannheim/tesseract/wiki).
+  - Thêm đường dẫn cài đặt (thường là C:\Program Files\Tesseract-OCR) vào biến môi trường PATH của Windows.
 
-### 2. Install Dependencies
-Clone the repository and install the required Python packages:
+### 2. Cài đặt thư viện
+Clone repository và cài đặt các thư viện Python cần thiết:
 
 ```bash
 git clone <your-repo-url>
@@ -26,30 +26,29 @@ python -m venv venv
 venv\Scripts\activate
 pip install -r streamlit_app/requirements.txt
 ```
-*(Note: If you don't have a `requirements.txt`, you can install manually: `pip install streamlit langchain langchain-google-genai langchain-chroma unstructured[pdf] sentence-transformers python-dotenv`)*
 
-### 3. Environment Variables
-Create a `.env` file in the root directory (`OnPoint/`) and add your Gemini API Key:
+### 3. Biến môi trường
+Tạo một file `.env` ở thư mục gốc (`OnPoint/`) và cấu hình API Key của Gemini:
 ```env
 GEMINI_API_KEY=your_google_api_key_here
 ```
 
-## 💻 How to Run the App
+## Hướng dẫn sử dụng
 
-1. Activate your virtual environment (if not already active).
-2. Start the Streamlit app:
+1. Kích hoạt môi trường ảo (nếu chưa kích hoạt).
+2. Khởi động ứng dụng Streamlit:
 ```bash
 cd streamlit_app
 streamlit run app.py
 ```
-3. Open your browser at `http://localhost:8501`.
-4. Upload a contract (PDF) on the sidebar and click **"Phân tích & Số hóa"**.
-5. Wait for the processing to finish (1-2 minutes for scanned PDFs).
-6. Start asking questions in Vietnamese in the chat box!
+3. Mở trình duyệt web tại `http://localhost:8501`.
+4. Ở thanh bên trái, tải lên một hợp đồng (định dạng PDF) và nhấn "Phân tích & Số hóa".
+5. Chờ hệ thống xử lý (khoảng 1-2 phút đối với PDF dạng ảnh quét).
+6. Bắt đầu đặt câu hỏi bằng Tiếng Việt trong khung chat để tra cứu.
 
-## ⚠️ Limitations & Trade-offs
-- **Latency**: This POC uses a local Tesseract OCR engine which is highly CPU-intensive and slow. In a production environment, this should be replaced with a managed Cloud OCR (like AWS Textract).
-- **Single-turn QA**: Currently, the assistant answers one-off questions. Memory can be added for multi-turn conversations in future iterations.
+## Hạn chế và Đánh đổi (Trade-offs)
+- Độ trễ (Latency): Bản POC này sử dụng Tesseract OCR chạy cục bộ, tiêu tốn nhiều tài nguyên CPU và khá chậm. Trong môi trường thực tế (Production), module này nên được thay thế bằng các dịch vụ Cloud OCR (như AWS Textract hoặc Google Cloud Vision).
+- QA Đơn lượt (Single-turn QA): Hiện tại, trợ lý ảo chỉ trả lời các câu hỏi đơn lẻ. Tính năng bộ nhớ (Memory) cho các cuộc hội thoại đa lượt có thể được tích hợp trong các bản cập nhật sau.
 
-## 🧠 Core Logic (For Developers)
-If you want to see the algorithmic design (Chunking, Prompts, Stateful Logic) without the UI, please refer to the Jupyter Notebook: `Digital_Contract_Hub_Full.ipynb`.
+## Kiến trúc Lõi (Dành cho Developer)
+Để xem chi tiết về luồng thiết kế thuật toán (Chunking, Prompts, Stateful Logic) mà không cần giao diện người dùng, vui lòng tham khảo file Jupyter Notebook: `Digital_Contract_Hub_Full.ipynb`.
