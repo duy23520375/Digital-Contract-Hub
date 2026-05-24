@@ -1,0 +1,17 @@
+streamlit
+google-generativeai
+langchain
+langchain-core
+langchain-google-genai
+langchain-text-splitters
+langchain-chroma
+langchain-huggingface
+langchain-community
+chromadb
+sentence-transformers
+python-dotenv
+unstructured
+unstructured[pdf]
+pdf2image
+pdfminer.six
+pillow

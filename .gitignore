@@ -1,0 +1,15 @@
+venv/
+.env
+chroma_db/
+chroma_db_final/
+chroma_db_hierarchical/
+chroma_db_streamlit/
+temp_contract.pdf
+__pycache__/
+*.docx
+*.pdf
+*.pyc
+.ipynb_checkpoints/
+fix_*.py
+bulletproof_*.py
+add_fallback_*.py
