@@ -24,7 +24,7 @@ git clone <your-repo-url>
 cd OnPoint
 python -m venv venv
 venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r streamlit_app/requirements.txt
 ```
 *(Note: If you don't have a `requirements.txt`, you can install manually: `pip install streamlit langchain langchain-google-genai langchain-chroma unstructured[pdf] sentence-transformers python-dotenv`)*
 
